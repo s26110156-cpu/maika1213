@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>休觀Lavender & Purple Pastel Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Cute Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Theme Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        purpleBg: '#FAF5FF',
+                        purpleLight: '#F3E8FF',
+                        purpleSoft: '#E9D5FF',
+                        purplePastel: '#D8B4FE',
+                        purpleMain: '#C084FC',
+                        purpleDark: '#A855F7',
+                        purpleDeep: '#7E22CE',
+                        purpleNight: '#3B0764',
+                        purplePink: '#F472B6',
+                        goldAccent: '#FBBF24',
+                    },
+                    fontFamily: {
+                        cute: ['"Zen Maru Gothic"', '"Fredoka"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Zen Maru Gothic', 'Fredoka', sans-serif;
+            background: radial-gradient(circle at 50% 15%, #FAF5FF 0%, #E9D5FF 45%, #C084FC 100%);
+            color: #3B0764;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating background particles */
+        .bg-sparkle {
+            position: absolute;
+            pointer-events: none;
+            animation: floatParticle 5s ease-in-out infinite;
+        }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-18px) rotate(12deg) scale(1.15); }
+        }
+
+        /* Avatar glow effect */
+        @keyframes purpleGlow {
+            0%, 100% { filter: drop-shadow(0 0 12px rgba(192, 132, 252, 0.8)); }
+            50% { filter: drop-shadow(0 0 26px rgba(168, 85, 247, 1)); }
+        }
+
+        /* 3D Claymorphism Unlocked Card */
+        .card-3d-unlocked {
+            background: linear-gradient(135deg, #FFFFFF 0%, #FAF5FF 100%);
+            border: 3.5px solid #C084FC;
+            box-shadow: 0 8px 0 0 #A855F7, 0 14px 22px -4px rgba(168, 85, 247, 0.35);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-3d-unlocked:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 16px 0 0 #A855F7, 0 22px 30px -5px rgba(168, 85, 247, 0.45);
+            border-color: #9333EA;
+        }
+
+        .card-3d-unlocked:active {
+            transform: translateY(2px) scale(0.98);
+            box-shadow: 0 4px 0 0 #A855F7, 0 6px 12px -2px rgba(168, 85, 247, 0.3);
+        }
+
+        /* Locked Card Styling */
+        .card-locked {
+            background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%);
+            border: 3px solid #E9D5FF;
+            box-shadow: 0 6px 0 0 #C084FC, 0 8px 16px -4px rgba(192, 132, 252, 0.25);
+            transition: all 0.2s ease;
+            position: relative;
+            cursor: not-allowed;
+        }
+
+        .card-locked:hover {
+            animation: lockShake 0.4s ease-in-out;
+            background: #F3E8FF;
+            border-color: #C084FC;
+        }
+
+        @keyframes lockShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-5px) rotate(-2deg); }
+            40% { transform: translateX(5px) rotate(2deg); }
+            60% { transform: translateX(-3px) rotate(-1deg); }
+            80% { transform: translateX(3px) rotate(1deg); }
+        }
+
+        /* Shiny Sweep Effect for Unlocked Cards */
+        .shiny-sweep::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.8),
+                transparent
+            );
+            transform: skewX(-25deg);
+            transition: 0.65s ease-in-out;
+        }
+
+        .shiny-sweep:hover::before {
+            left: 170%;
+        }
+
+        /* Dynamic EXP Bar Animation */
+        .exp-bar-fill {
+            background: linear-gradient(90deg, #C084FC 0%, #F472B6 50%, #FBBF24 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Custom Locked Tooltip */
+        .locked-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            transform: translateY(8px);
+        }
+
+        .card-locked:hover .locked-tooltip {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-10 flex flex-col justify-between items-center min-h-screen">
+
+    <div class="bg-sparkle top-8 left-[6%] text-purpleMain text-3xl opacity-80 z-0">💜</div>
+    <div class="bg-sparkle top-16 right-[8%] text-purpleDark text-4xl opacity-80 z-0" style="animation-delay: 1s;">✨</div>
+    <div class="bg-sparkle bottom-20 left-[5%] text-purplePastel text-4xl opacity-80 z-0" style="animation-delay: 2s;">🌟</div>
+    <div class="bg-sparkle bottom-28 right-[7%] text-purplePink text-3xl opacity-80 z-0" style="animation-delay: 1.5s;">🔮</div>
+    <div class="bg-sparkle top-1/2 left-[2%] text-purpleSoft text-3xl opacity-70 z-0" style="animation-delay: 2.5s;">☁️️</div>
+    <div class="bg-sparkle top-1/3 right-[3%] text-purpleMain text-2xl opacity-70 z-0" style="animation-delay: 0.8s;">💜</div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="w-full max-w-6xl mx-auto flex-1 flex flex-col justify-center items-center relative z-10">
+
+        <header class="w-full max-w-2xl bg-white/90 backdrop-blur-md rounded-[36px] p-6 sm:p-8 mb-10 border-4 border-purplePastel shadow-[0_15px_35px_rgba(168,85,247,0.25)] flex flex-col items-center text-center relative">
+            
+            <!-- Avatar Container -->
+            <div class="relative group mb-4">
+                <div class="https://i.postimg.cc/sgVGcnCf/IMG-4389.avif">
+                    <!-- Cute Bear Avatar -->
+                    <svg class="w-full h-full rounded-full bg-purpleSoft/40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="#E9D5FF"/>
+                        <!-- Bear Ears -->
+                        <circle cx="22" cy="22" r="11" fill="#C084FC"/>
+                        <circle cx="22" cy="22" r="5" fill="#F472B6"/>
+                        <circle cx="78" cy="22" r="11" fill="#C084FC"/>
+                        <circle cx="78" cy="22" r="5" fill="#F472B6"/>
+                        <!-- Eyes -->
+                        <circle cx="36" cy="46" r="5" fill="#3B0764"/>
+                        <circle cx="64" cy="46" r="5" fill="#3B0764"/>
+                        <circle cx="38" cy="44" r="1.8" fill="white"/>
+                        <circle cx="66" cy="44" r="1.8" fill="white"/>
+                        <!-- Blush -->
+                        <ellipse cx="28" cy="54" rx="6" ry="3.5" fill="#F472B6" opacity="0.8"/>
+                        <ellipse cx="72" cy="54" rx="6" ry="3.5" fill="#F472B6" opacity="0.8"/>
+                        <!-- Nose & Mouth -->
+                        <ellipse cx="50" cy="53" rx="4" ry="3" fill="#A855F7"/>
+                        <path d="M45 58 Q50 64 55 58" stroke="#3B0764" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                        <!-- Crown -->
+                        <path d="M42 20 L45 28 L50 22 L55 28 L58 20 L61 32 L39 32 Z" fill="#FBBF24"/>
+                    </svg>
+                </div>
+                <!-- Badge -->
+                <span class="absolute -bottom-1 right-1 bg-goldAccent text-purpleNight text-xs font-bold px-3 py-1 rounded-full border-2 border-white shadow-md flex items-center gap-1">
+                    <i class="fa-solid fa-crown text-amber-700"></i> LV.01
+                </span>
+            </div>
+
+            <!-- Profile Title & Name -->
+            <h1 class="text-2xl sm:text-3xl font-black text-purpleNight tracking-wide flex items-center justify-center gap-2">
+                茉依佳 <span class="inline-block animate-bounce text-xl">🔮</span>
+            </h1>
+            <p class="text-sm sm:text-base font-semibold text-purpleDeep/80 mt-1 mb-4">
+                ✨休觀1年 ✨
+            </p>
+
+            <!-- Animated EXP Progress Bar -->
+            <div class="w-full max-w-md bg-purpleBg rounded-full p-1.5 border-2 border-purplePastel shadow-inner">
+                <div class="flex justify-between text-xs font-bold text-purpleDeep px-2 mb-1">
+                    <span>EXP 活力</span>
+                    <span>2 / 16 (12.5%)</span>
+                </div>
+                <div class="w-full bg-purpleSoft/60 rounded-full h-4 overflow-hidden relative">
+                    <div class="exp-bar-fill h-full rounded-full transition-all duration-1000" style="width: 12.5%;"></div>
+                </div>
+            </div>
+        </header>
+
+        <main class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+
+            <!-- BUTTON 1: Week 1 (UNLOCKED) -->
+            <a href="w1/index.html" class="card-3d-unlocked shiny-sweep rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start mb-3">
+                    <span class="bg-purpleSoft text-purpleNight text-xs font-bold px-3 py-1 rounded-full border border-purpleMain">
+                        STAGE 01
+                    </span>
+                    <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                        <i class="fa-solid fa-check"></i> CLEAR
+                    </span>
+                </div>
+                <div class="my-2">
+                    <div class="text-3xl mb-1 transition-transform group-hover:scale-125 duration-300">🎴</div>
+                    <h2 class="text-lg font-bold text-purpleNight group-hover:text-purpleDark transition-colors">
+                        Week 1 - 數位名片
+                    </h2>
+                    <p class="text-xs text-purpleDeep/70 mt-1">建立專屬個人風格名片</p>
+                </div>
+                <div class="mt-3 text-right">
+                    <span class="inline-flex items-center text-xs font-bold text-purpleDark group-hover:translate-x-1 transition-transform">
+                        探索關卡 <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </span>
+                </div>
+            </a>
+
+            <!-- BUTTON 2: Week 2 (UNLOCKED) -->
+            <a href="w2/index.html" class="card-3d-unlocked shiny-sweep rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start mb-3">
+                    <span class="bg-purpleSoft text-purpleNight text-xs font-bold px-3 py-1 rounded-full border border-purpleMain">
+                        STAGE 02
+                    </span>
+                    <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                        <i class="fa-solid fa-check"></i> CLEAR
+                    </span>
+                </div>
+                <div class="my-2">
+                    <div class="text-3xl mb-1 transition-transform group-hover:scale-125 duration-300">🍱</div>
+                    <h2 class="text-lg font-bold text-purpleNight group-hover:text-purpleDark transition-colors">
+                        Week 2 - 今天吃甚麼?
+                    </h2>
+                    <p class="text-xs text-purpleDeep/70 mt-1">美食選擇困難救星</p>
+                </div>
+                <div class="mt-3 text-right">
+                    <span class="inline-flex items-center text-xs font-bold text-purpleDark group-hover:translate-x-1 transition-transform">
+                        探索關卡 <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </span>
+                </div>
+            </a>
+
+            <!-- Week 3 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 03</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 3 - 尚未解鎖</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">完成前置任務開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    🔒 請先修練先修關卡！
+                </div>
+            </div>
+
+            <!-- Week 4 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 04</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 4 - 尚未解鎖</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">完成前置任務開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    🔒 魔法能量調配中...
+                </div>
+            </div>
+
+            <!-- Week 5 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 05</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 5 - 尚未解鎖</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">完成前置任務開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    🔒 請解開下一關卷軸！
+                </div>
+            </div>
+
+            <!-- Week 6 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 06</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 6 - 尚未解鎖</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">完成前置任務開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    🔒 尚未到達開啟時間
+                </div>
+            </div>
+
+            <!-- Week 7 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 07</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 7 - 尚未解鎖</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">完成前置任務開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    🔒 魔法鎖頭封印中
+                </div>
+            </div>
+
+            <!-- Week 8 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 08</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 8 - 中場 BOSS 關</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">等級不足無法開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    ⚔️ BOSS 尚未降臨！
+                </div>
+            </div>
+
+            <!-- Week 9 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 09</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 9 - 尚未解鎖</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">完成前置任務開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    🔒 冒險繼續進行中
+                </div>
+            </div>
+
+            <!-- Week 10 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 10</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 10 - 尚未解鎖</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">完成前置任務開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    🔒 魔法能量累積中
+                </div>
+            </div>
+
+            <!-- Week 11 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 11</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 11 - 尚未解鎖</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">完成前置任務開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    🔒 探索未知新地圖
+                </div>
+            </div>
+
+            <!-- Week 12 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 12</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 12 - 尚未解鎖</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">完成前置任務開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    🔒 魔法結晶調製中
+                </div>
+            </div>
+
+            <!-- Week 13 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 13</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 13 - 尚未解鎖</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">完成前置任務開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    🔒 請持續積累經驗！
+                </div>
+            </div>
+
+            <!-- Week 14 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 14</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 14 - 尚未解鎖</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">完成前置任務開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    🔒 高級魔法準備中
+                </div>
+            </div>
+
+            <!-- Week 15 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 15</span>
+                    <span class="text-lg">🔒</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 15 - 尚未解鎖</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">完成前置任務開啟</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    🔒 倒數第二關卡！
+                </div>
+            </div>
+
+            <!-- Week 16 -->
+            <div class="card-locked rounded-3xl p-5 flex flex-col justify-between group">
+                <div class="flex justify-between items-start">
+                    <span class="bg-purpleSoft/50 text-purpleDeep/60 text-xs font-bold px-3 py-1 rounded-full">STAGE 16</span>
+                    <span class="text-lg">👑</span>
+                </div>
+                <div class="my-4 text-center">
+                    <p class="text-sm font-bold text-purpleNight/50">Week 16 - 最終大挑戰</p>
+                    <p class="text-xs text-purpleDeep/40 mt-1">通關終極專題</p>
+                </div>
+                <div class="locked-tooltip bg-purpleNight text-white text-[11px] font-bold text-center py-1 px-2 rounded-xl">
+                    👑 最終大魔王關卡！
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="mt-12 text-center text-xs font-bold text-purpleDeep/70 relative z-10">
+        <p class="flex items-center justify-center gap-1">
+            Made with <span class="text-purplePink">💜</span> for Web Development Class © 2026
+        </p>
+    </footer>
+
+</body>
+</html>
